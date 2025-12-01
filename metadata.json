@@ -1,0 +1,5 @@
+{
+  "name": "Slice & Slide & OCR",
+  "description": "An intelligent image layout decomposition tool that analyzes images, detects content blocks via computer vision algorithms, and exports them as editable PowerPoint slides.",
+  "requestFramePermissions": []
+}
