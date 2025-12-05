@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { DropZone } from './components/DropZone';
 import { PreviewArea } from './components/PreviewArea';
 import { ControlPanel } from './components/ControlPanel';
+import { ReadmeModal } from './components/ReadmeModal';
 import { detectBlocks, extractRegion } from './services/imageProcessing';
 import { generatePptx } from './services/pptxService';
 import { convertPdfToImages } from './services/pdfLoader';
@@ -28,6 +30,9 @@ export default function App() {
   // Settings
   const [fontFamily, setFontFamily] = useState<string>('Yu Gothic');
   
+  // UI State
+  const [isReadmeOpen, setIsReadmeOpen] = useState(false);
+
   // Undo History
   const [history, setHistory] = useState<Page[][]>([]);
 
@@ -359,9 +364,25 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row overflow-hidden bg-slate-50">
       
+      <ReadmeModal 
+        isOpen={isReadmeOpen} 
+        onClose={() => setIsReadmeOpen(false)} 
+      />
+
       {pages.length === 0 ? (
         // Empty State / Upload Screen
-        <div className="w-full h-screen flex flex-col items-center justify-center p-6 animate-fade-in">
+        <div className="w-full h-screen flex flex-col items-center justify-center p-6 animate-fade-in relative">
+          {/* Help button for initial screen */}
+          <button 
+            onClick={() => setIsReadmeOpen(true)}
+            className="absolute top-6 right-6 flex items-center gap-2 px-4 py-2 bg-white rounded-full text-slate-500 font-medium shadow-sm hover:shadow-md hover:text-indigo-600 transition-all border border-slate-100"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            How to use
+          </button>
+
           <div className="max-w-2xl w-full text-center space-y-8">
             <div>
               <h1 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight">
@@ -449,6 +470,7 @@ export default function App() {
               isProcessing={globalStatus === ProcessingStatus.PROCESSING}
               fontFamily={fontFamily}
               setFontFamily={setFontFamily}
+              onShowReadme={() => setIsReadmeOpen(true)}
             />
           )}
 

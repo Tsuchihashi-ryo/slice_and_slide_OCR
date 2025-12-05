@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Block } from '../types';
 
@@ -11,9 +12,9 @@ interface ControlPanelProps {
   onUndo: () => void;
   canUndo: boolean;
   isProcessing: boolean;
-  // New Props
   fontFamily: string;
   setFontFamily: (font: string) => void;
+  onShowReadme: () => void; // New prop
 }
 
 const FONT_OPTIONS = [
@@ -41,11 +42,12 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   isProcessing,
   fontFamily,
   setFontFamily,
+  onShowReadme,
 }) => {
   return (
     <div className="w-full md:w-80 lg:w-96 bg-white border-l border-slate-200 p-6 flex flex-col h-full shadow-xl z-20 overflow-y-auto">
       
-      <div className="mb-8 flex justify-between items-start">
+      <div className="mb-8 flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
             <span className="text-indigo-600">Slice</span> & Slide
@@ -54,6 +56,15 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             Decompose images into editable slides.
           </p>
         </div>
+        <button 
+          onClick={onShowReadme}
+          className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-indigo-600 transition-colors"
+          title="Usage Guide"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </button>
       </div>
       
       {/* Undo Button */}
