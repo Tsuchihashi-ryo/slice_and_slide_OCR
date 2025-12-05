@@ -1,20 +1,35 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Slice & Slide
 
-# Run and deploy your AI Studio app
+Slice & Slide は、画像や PDF を分析し、コンピュータビジョンアルゴリズムを使用してコンテンツブロックを検出し、編集可能な PowerPoint スライドとしてエクスポートするインテリジェントな画像レイアウト分解ツールです。
 
-This contains everything you need to run your app locally.
+## 使い方
 
-View your app in AI Studio: https://ai.studio/apps/drive/14MIOwbFFvvZNRYZtgNbT90tscOQnfdmJ
+### 1. アップロード
+*   **ドラッグ＆ドロップ**: 画像 (JPG, PNG, WEBP) または PDF ファイルをアップロードエリアにドラッグします。
+*   **貼り付け**: クリップボードから画像を直接 `Ctrl+V` (または `Cmd+V`) で貼り付けます。
 
-## Run Locally
+### 2. レイアウトの分析と編集
+アプリは自動的にコンテンツブロックを検出します:
+*   **青いブロック**: テキスト (PPTX で編集可能)。
+*   **オレンジのブロック**: 画像 (PPTX では静止画)。
 
-**Prerequisites:**  Node.js
+**操作:**
+*   **検出感度 (Detection Sensitivity)**: サイドバーのスライダーを使用して、レイアウトの粒度を調整します。値を小さくすると細かい詳細が検出され、大きくすると要素がグループ化されます。
+*   **ブロックタイプの変更**: ブロックをクリックし、「Switch to...」ボタンをクリックして、テキストモードと画像モードを切り替えます。
+*   **ブロックの結合 (Merge Blocks)**: キャンバス上でドラッグして複数のブロックを選択し、「Merge Blocks」をクリックして1つの画像ブロックに結合します。
+*   **背景の保持 (Preserve Background)**: 図形や図表を含むテキストブロック（例：矢印の中のテキスト）の場合、ブロックを選択して **"Keep Background Image"** をチェックします。これにより、PowerPoint 上で編集可能なテキストの後ろに元の画像が表示されます。
 
+### 3. テキスト認識 (OCR)
+*   サイドバーの **"Detect Text (OCR)"** ボタンをクリックします。
+*   アプリは Tesseract.js を使用して青いブロックからテキストを抽出します。
+*   *注意: 出力時にテキストを編集可能にする場合は、この手順が必要です。*
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### 4. エクスポート
+*   ドロップダウンから希望の **フォントファミリー** を選択します。
+*   **"Export to PPTX"** をクリックして、生成された PowerPoint ファイルをダウンロードします。
+
+## 機能
+*   **ローカル処理**: Canvas API を使用して、ブラウザ内で効率的に画像分析を実行します。
+*   **多言語 OCR**: 英語と日本語のテキスト認識をサポートしています。
+*   **元に戻す**: レイアウト変更を間違えた場合でも簡単に元に戻せます。
+*   **PDF サポート**: 複数ページの PDF を自動的に個別のスライドに変換します。
